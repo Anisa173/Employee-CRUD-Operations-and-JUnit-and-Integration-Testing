@@ -86,7 +86,7 @@ public class EmployeeServiceTestswithMockannotation {
         employeeRepository.save(emp1);
         employeeRepository.save(emp2);
         employeeRepository.save(employee);
-        List<Employee> employeeList = List.of(emp1, emp2);
+        List<Employee> employeeList = List.of(emp1, emp2,employee);
 
         given(employeeRepository.findAll()).willReturn(employeeList);
 

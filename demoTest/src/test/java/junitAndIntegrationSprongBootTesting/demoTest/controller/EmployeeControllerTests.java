@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest
+@WebMvcTest(controllers = EmployeeController.class,excludeAutoConfiguration = {SecurityAutoConfiguration.class})
 public class EmployeeControllerTests {
     @MockBean
     private EmployeeService eService;
