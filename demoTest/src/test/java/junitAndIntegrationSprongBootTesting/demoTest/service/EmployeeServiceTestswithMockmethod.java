@@ -27,9 +27,9 @@ import static org.mockito.Mockito.verify;
 
 
 public class EmployeeServiceTestswithMockmethod {
-
+    @Autowired
     private EmployeeRepository emplRepo;
-
+    @Autowired
     private EmployeeService employeeService;
 
     private Employee employee;
