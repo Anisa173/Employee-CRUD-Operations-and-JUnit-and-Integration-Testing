@@ -45,13 +45,14 @@ public class EmployeeControllerIntegTestContainers {
             .withPassword("password")
             .withDatabaseName("employee");
 
-
     @DynamicPropertySource
     public static void dynamicPropertySource(DynamicPropertyRegistry propertyRegistry) {
         propertyRegistry.add("spring.datasource.url", mySQLContainer::getJdbcUrl);
         propertyRegistry.add("spring.datasource.username", mySQLContainer::getUsername);
         propertyRegistry.add("spring.datasource.password", mySQLContainer::getPassword);
-
+        System.out.println(mySQLContainer.getUsername());
+        System.out.println(mySQLContainer.getPassword());
+        System.out.println(mySQLContainer.getDatabaseName());
     }
 
     @BeforeEach
@@ -63,19 +64,22 @@ public class EmployeeControllerIntegTestContainers {
     @DisplayName("JUnit tests case to create a new Employee Record")
     @Test
     public void givenEmployeeObject_whenSaveEmployee_thenReturnEmployee() throws Exception {
-        System.out.println(mySQLContainer.getUsername());
-        System.out.println(mySQLContainer.getPassword());
-        System.out.println(mySQLContainer.getDatabaseName());
 
         //given - precondition or setUp
         employee = Employee.builder().firstName("Anisa").lastName("Çela").email("celaanisa07@gmail.com").build();
         repository.save(employee);
 
         //when -- operations to be executed
-        ResultActions response = mockMvc.perform(post("/api/employee/add/employee").contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(employee)));
+        ResultActions response = mockMvc.perform(post("/api/employee/add/employee")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(employee)));
 
         //then -- result of the operation to be verified
-        response.andDo(print()).andExpect(status().isCreated()).andExpect(jsonPath("$.firstName", is(employee.getFirstName()))).andExpect(jsonPath("$.lastName", is(employee.getLastName()))).andExpect(jsonPath("$.email", is(employee.getEmail())));
+        response.andDo(print())
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.firstName", is(employee.getFirstName())))
+                .andExpect(jsonPath("$.lastName", is(employee.getLastName())))
+                .andExpect(jsonPath("$.email", is(employee.getEmail())));
     }
 
     //JUnit Test Case to fetch an EmployRecord based on employeeId --Positive Scenario
@@ -83,14 +87,23 @@ public class EmployeeControllerIntegTestContainers {
     @Test
     public void givenEmployeeObject_whenFindById_thenReturnEmployee() throws Exception {
         //given - preconditions or setUp
-        employee = Employee.builder().firstName("Anisa").lastName("Çela").email("celaanisa07@gmail.com").build();
+        employee = Employee.builder()
+                .firstName("Anisa")
+                .lastName("Çela")
+                .email("celaanisa07@gmail.com")
+                .build();
         Employee employee1 = repository.save(employee);
 
         //when - operation to be executed
         ResultActions response = mockMvc.perform(get("/api/employee/{employeeId}", employee1.getEmplId()));
 
         //then - the action's effect to be verified
-        response.andDo(print()).andExpect(status().isOk()).andExpect((ResultMatcher) jsonPath("$.employeeId", employee1.getEmplId())).andExpect((ResultMatcher) jsonPath("$.firstName", employee1.getFirstName())).andExpect((ResultMatcher) jsonPath("$.lastName", employee1.getLastName())).andExpect((ResultMatcher) jsonPath("$.email", employee1.getEmail()));
+        response.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.employeeId", is(employee1.getEmplId())))
+                .andExpect(jsonPath("$.firstName", is(employee1.getFirstName())))
+                .andExpect(jsonPath("$.lastName", is(employee1.getLastName())))
+                .andExpect(jsonPath("$.email", is(employee1.getEmail())));
 
     }
 
@@ -106,7 +119,9 @@ public class EmployeeControllerIntegTestContainers {
         ResultActions response = mockMvc.perform(get("/api/employee/{employeeId}", employee1.getEmplId()));
 
         //then - the action's effect to be verified
-        response.andDo(print()).andExpect(status().isNotFound());
+        response.andDo(print())
+                .andExpect(status()
+                        .isNotFound());
 
     }
 
@@ -141,10 +156,16 @@ public class EmployeeControllerIntegTestContainers {
         employeeFetched.setEmail("celaanisa08@outlook.com");
 
         //when - update operation to be executed
-        ResultActions response = mockMvc.perform(put("/api/employee/{employeeId}", employeeFetched.getEmplId()).contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(employeeFetched)));
+        ResultActions response = mockMvc.perform(put("/api/employee/{employeeId}", employeeFetched.getEmplId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(employeeFetched)));
 
         //then - Update Record Result to be verified
-        response.andDo(print()).andExpect(status().isFound()).andExpect(jsonPath("$.firstName", is(employeeFetched.getFirstName()))).andExpect(jsonPath("$.lastName", is(employeeFetched.getLastName()))).andExpect(jsonPath("$.email", is(employeeFetched.getEmail())));
+        response.andDo(print())
+                .andExpect(status().isFound())
+                .andExpect(jsonPath("$.firstName", is(employeeFetched.getFirstName())))
+                .andExpect(jsonPath("$.lastName", is(employeeFetched.getLastName())))
+                .andExpect(jsonPath("$.email", is(employeeFetched.getEmail())));
 
     }
 
@@ -171,7 +192,11 @@ public class EmployeeControllerIntegTestContainers {
     @Test
     public void givenEmployeeObject_whenDeleteById_thenVerifyRemovedEmployee() throws Exception {
         //given -- preconditions or setUp
-        Employee employee1 = Employee.builder().firstName("Anisa").lastName("Cela").email("celaanisa07@outlook.com").build();
+        Employee employee1 = Employee.builder()
+                .firstName("Anisa")
+                .lastName("Cela")
+                .email("celaanisa07@outlook.com")
+                .build();
         employee = repository.save(employee1);
 
         //when -- the RestAPI to be processed

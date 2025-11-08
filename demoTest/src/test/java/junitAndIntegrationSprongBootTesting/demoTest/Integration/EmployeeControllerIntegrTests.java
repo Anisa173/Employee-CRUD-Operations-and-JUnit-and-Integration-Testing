@@ -102,10 +102,10 @@ public class EmployeeControllerIntegrTests {
                 .lastName("Çela")
                 .email("celaanisa07@gmail.com")
                 .build();
-        Employee employee1 = employeeRepository.save(employee);
+        Employee employee2 = employeeRepository.save(employee);
 
         //when - operation to be executed
-        ResultActions response = mockMvc.perform(get("/api/employee/{employeeId}", employee1.getEmplId()));
+        ResultActions response = mockMvc.perform(get("/api/employee/{employeeId}", employee2.getEmplId()));
 
         //then - the action's effect to be verified
         response.andDo(print())
