@@ -86,10 +86,10 @@ public class EmployeeControllerTests {
         //then - the action's effect to be verified
         response.andDo(print())
                 .andExpect(status().isOk())
-                .andExpect((ResultMatcher) jsonPath("$.employeeId", employee1.getEmplId()))
-                .andExpect((ResultMatcher) jsonPath("$.firstName", employee1.getFirstName()))
-                .andExpect((ResultMatcher) jsonPath("$.lastName", employee1.getLastName()))
-                .andExpect((ResultMatcher) jsonPath("$.email", employee1.getEmail()));
+                .andExpect(jsonPath("$.employeeId", is(employee1.getEmplId())))
+                .andExpect(jsonPath("$.firstName", is(employee1.getFirstName())))
+                .andExpect(jsonPath("$.lastName",is(employee1.getLastName())))
+                .andExpect(jsonPath("$.email", is(employee1.getEmail())));
 
     }
 
