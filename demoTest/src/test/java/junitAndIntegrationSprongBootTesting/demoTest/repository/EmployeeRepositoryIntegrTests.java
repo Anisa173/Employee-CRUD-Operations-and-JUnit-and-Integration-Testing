@@ -19,7 +19,7 @@ public class EmployeeRepositoryIntegrTests extends AbstractContainersTestBase {
 
     @Autowired
     private EmployeeRepository emplRepository;
-    @Autowired
+   
     private Employee employee;
 
     void setUp() {
