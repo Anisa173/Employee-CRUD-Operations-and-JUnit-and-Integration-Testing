@@ -198,7 +198,7 @@ public class EmployeeServiceTestswithMockannotation {
         employeeRepository.save(empl4);
         employeeRepository.save(employee);
 
-        List<Employee> employeeList = List.of(employee, empl1, empl2, empl3, empl4, employee);
+        List<Employee> employeeList = List.of(employee, empl1, empl2, empl3, empl4);
         given(employeeRepository.findByFirstNameAndLastName("Astri", "Astari")).willReturn(employeeList.stream().toList());
 
         //when - the operation to be executed
