@@ -170,6 +170,8 @@ public class EmployeeServiceTestswithMockannotation {
         //given - preconditions or setUp
         Employee employee1 = employeeRepository.save(employee);
         willDoNothing().given(employeeRepository).deleteById(employee1.getEmplId());
+        //given(employeeRepository).findById(employee1.getEmplId());
+
 
         //when - the delete operation to be executed
 
