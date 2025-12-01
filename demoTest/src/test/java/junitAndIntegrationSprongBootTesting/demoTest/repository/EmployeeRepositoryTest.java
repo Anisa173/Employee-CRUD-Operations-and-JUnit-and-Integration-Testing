@@ -24,7 +24,7 @@ public class EmployeeRepositoryTest {
     void setUp() {
         employee1 = Employee.builder()
                 .firstName("Anisa")
-                .firstName("Cela")
+                .lastName("Cela")
                 .email("celaanisa07@gmail.com")
                 .build();
     }
