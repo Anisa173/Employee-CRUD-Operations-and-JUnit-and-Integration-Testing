@@ -77,9 +77,9 @@ public class EmployeeRepositoryIntegrTests extends AbstractContainersTestBase {
     public void givenEmployObject_whenUpdateEmployeeAtributes_thenReturnUpdatedEmployRecord() {
         //given - precondition or setup
 
-        emplRepository.save(employee);
+        Employee employee1 = emplRepository.save(employee);
         //when - the action to be done
-        Employee employeeById = emplRepository.findById(employee.getEmplId()).get();
+        Employee employeeById = emplRepository.findById(employee1.getEmplId()).get();
         employeeById.setEmail("celaa123@gmail.com");
         Employee updatedEmployee = emplRepository.save(employeeById);
 
