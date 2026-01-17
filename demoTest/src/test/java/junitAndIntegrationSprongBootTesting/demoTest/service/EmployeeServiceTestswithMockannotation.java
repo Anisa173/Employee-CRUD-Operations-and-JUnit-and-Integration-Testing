@@ -46,8 +46,8 @@ public class EmployeeServiceTestswithMockannotation {
     public void givenEmployeeObject_whenAddEmployeeRecord_thenReturnSavedEmployeeRecord() throws Exception {
         //given - precondition or setUp
         // employee = Employee.builder().firstName("Anisa").lastName("Cela").email("celaanisa07@gmail.com").build();
-
-        given(employeeRepository.findByEmail(employee.getEmail())).willReturn(Optional.empty());
+         Employee employee1=employeeRepository.save(employee);
+        given(employeeRepository.findByEmail(employee1.getEmail())).willReturn(Optional.empty());
         given(employeeRepository.save(employee)).willReturn(employee);
         //when - the operation to be done
         Employee savedEmployee = serviceImpl.saveEmployee(employee);
